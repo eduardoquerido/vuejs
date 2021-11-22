@@ -26,8 +26,8 @@ export default new Vuex.Store({
     login(context, { usuario, senha }) {
       axios
         .post("login", {
-          nome: usuario,
-          senha: senha
+          username: usuario,  // Nome no JWT do backend é username para usuário
+          password: senha     // Nome no JWT do backend é passwor para usuário
         })
         .then(res => {
           console.log(res);

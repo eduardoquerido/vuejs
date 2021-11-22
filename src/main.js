@@ -15,6 +15,7 @@ axios.interceptors.response.use(res => {
   }, error => {
     if(error.response.status === 403) {
       alert('Não autorizado!')
+      router.push('/login')
     }
     else if (error.response.status === 401) {
       store.commit('logout')
@@ -24,7 +25,7 @@ axios.interceptors.response.use(res => {
 })
 
 axios.defaults.baseURL =
-  "https://8080-dd2524ec-6390-40eb-804a-1dfc91645782.ws-us02.gitpod.io/frases";
+  "https://8081-yellow-blackbird-6m8b3k7n.ws-us17.gitpod.io/api";
 
 Vue.config.productionTip = false
 

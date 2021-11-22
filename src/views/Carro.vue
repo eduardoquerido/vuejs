@@ -1,19 +1,18 @@
 <template>
   <div>
     <form @submit.prevent="cadastrar">
-      <h2>Frases Motivacionais</h2>
+      <h2>Cadastro de Carros</h2>
       <div class="form-group">
-        <label for="titulo">Título</label>
-        <input type="text" id="titulo"
+        <label for="nome">Nome do Carro</label>
+        <input type="text" id="nome"
             class="form-control" required autofocus
-            v-model="titulo">
+            v-model="nome">
       </div>
       <div class="form-group">
-        <label for="frase">Frase</label>
-        <textarea id="frase"
+        <label for="placa">Placa do Carro</label>
+        <input type="text" id="placa"
             class="form-control" required
-            v-model="frase">
-        </textarea>
+            v-model="placa">
       </div>
       <button class="btn btn-lg btn-primary btn-block" 
         type="submit">Salvar</button>
@@ -23,17 +22,15 @@
       <thead>
         <tr>
           <th>Id</th>
-          <th>Título</th>
-          <th>Frase</th>
-          <th>Data/hora</th>
+          <th>Nome do Carro</th>
+          <th>Placa do Carro</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="frase in frases" :key="frase.id">
-          <td>{{ frase.id }}</td>
-          <td>{{ frase.titulo }}</td>
-          <td>{{ frase.conteudo }}</td>
-          <td>{{ frase.dataHora }}</td>
+        <tr v-for="carro in carros" :key="carro.id">
+          <td>{{ carro.id }}</td>
+          <td>{{ carro.nome }}</td>
+          <td>{{ carro.placa }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,12 +41,12 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 export default {
-  name: 'anotacoes',
+  name: 'carros',
   data() {
     return {
-      titulo: '',
-      frase: '',
-      frases: []
+      nome: '',
+      placa: '',
+      carros: []
     }
   },
   computed: {
@@ -59,26 +56,26 @@ export default {
   },
   methods: {
     cadastrar() {
-      axios.post('frase/nova',
+      axios.post('carros/novo',
           {
-            titulo: this.titulo,
-            conteudo: this.frase,
+            nome: this.nome,
+            placa: this.placa,
             usuario: this.usuario
           })
         .then(res => {
           console.log(res);
-          this.titulo = '';
-          this.frase = '';
+          this.nome = '';
+          this.placa = '';
           this.atualizar();
         })
         .catch(error => console.log(error))
     },
     atualizar () {
-      axios.get('/frase/busca/' + this.usuario, 
+      axios.get('/carros/busca/' + this.usuario, 
           { headers: { Accept: 'application/json' } })
         .then(res => {
           console.log(res)
-          this.frases = res.data
+          this.carros = res.data
         })
         .catch(error => console.log(error))
     }
